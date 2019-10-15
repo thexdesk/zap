@@ -63,7 +63,9 @@ func AttachAppContext(ctx context.Context, app *cli.App) {
 			return err
 		}
 
-		rootLogger := zerolog.New(os.Stderr).Level(level).With().Timestamp().Logger()
+
+		out := zerolog.ConsoleWriter{Out: os.Stderr}
+		rootLogger := zerolog.New(out).Level(level).With().Timestamp().Logger()
 		logger := &rootLogger
 		ctx = logger.WithContext(ctx)
 		c.App.Metadata["context"] = ctx
